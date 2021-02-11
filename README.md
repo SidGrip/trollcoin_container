@@ -33,7 +33,7 @@ Then run ``` bash trollcoin_cointainer.sh```
 ###### The script will create a .trollcoin data directory with TrollCoin & trollcoind - both files are scripts that run same as the Qt wallet or daemon would.
 ###### -- will give you an option to download a bootstrap that is a week behind
 ###### -- will autogen a config with random user/pass and add currents nodes
-###### -- will also place a shortcut in your desktop applicatoins for launching the Qt wallet
+###### -- will place a shortcut in your desktop applicatoins for launching the Qt wallet
 <br>
 <h2 align="center">If this Makes Your Nipples So HARD, that you could cut glass!</h2>
 <h3 align="center">Please consider sending ALL YOUR TROLLCOIN to this burn address</h3>
