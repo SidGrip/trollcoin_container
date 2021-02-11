@@ -6,7 +6,7 @@
 https://github.com/TrollCoin2/TrollCoin-2.0/blob/master/README.md
 <br>
 #### To setup Non-Root Docker on Ubuntu 20.04
-##### - this was tested on a clean & updated install of Ubuntu 20.04
+
 https://docs.docker.com/engine/security/rootless/
 <br>
 https://docs.docker.com/engine/install/linux-postinstall/
@@ -14,6 +14,7 @@ https://docs.docker.com/engine/install/linux-postinstall/
 or
 <br>
 You can run this script - Everyting is run as user enter sudo password when prompted
+##### - this was tested on a clean & updated install of Ubuntu 20.04
 ###### If your running a diffrent vertion of Ubuntu change line 21 in the script to reflect your docker install package
 Copy & paste into terminal window
 ```
