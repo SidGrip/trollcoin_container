@@ -13,7 +13,7 @@ https://docs.docker.com/engine/install/linux-postinstall/
 <br>
 or
 <br>
-You can run this script - Everyting is run as user enter sudo passordw when prompted
+You can run this script - Everyting is run as user enter sudo password when prompted
 ###### If your running a diffrent vertion of Ubuntu change line 21 in the script to reflect your docker install package
 Copy & paste into terminal window
 ```
