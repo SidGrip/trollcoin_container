@@ -42,5 +42,5 @@ Then run ``` bash trollcoin_cointainer.sh```
 <p align="center">
   <img width="450" src="https://media1.tenor.com/images/7a13ea9d38f091d68125ad13763d5721/tenor.gif?itemid=16217383" alt="TrollRoll">
 </p>
-<h5 align="center">Doing so will also bring about world peace!</h5>
+<h4 align="center">Doing so will also bring about world peace!</h4>
 <h6 align="center">-- well not really, but you could imagine if it could</h6>
