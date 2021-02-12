@@ -39,7 +39,7 @@ Then run ``` bash trollcoin_cointainer.sh```
 <h2 align="center">If this Makes Your Nipples So HARD, that you could cut glass!</h2>
 <h3 align="center">Please consider sending ALL YOUR TROLLCOIN to this burn address</h3>
 <h2 align="center">TdSatSgVqvJNZ2PheSTDEXkA3BbraAE3gH</h2>
-<h3 align="center">So we can rid the world of this counterproductive crypto garbage</h3>
+<h3 align="center">So we can rid the world of this entertaining yet counterproductive crypto garbage</h3>
 <p align="center">
   <img width="450" src="https://media1.tenor.com/images/7a13ea9d38f091d68125ad13763d5721/tenor.gif?itemid=16217383" alt="TrollRoll">
 </p>
