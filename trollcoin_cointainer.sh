@@ -49,7 +49,7 @@ progressfilt ()
 while true; do
     read -p "Download Trollcoin Bootstrap? (Y or N)" yn
     case $yn in
-        [Yy]* ) wget --progress=bar:force -P $USERDIR/$CONFIGFOLDER $FTP/bootstrap.dat 2>&1 | progressfilt; break;;
+        [Yy]* ) wget --progress=bar:force -O $USERDIR/$CONFIGFOLDER/bootstrap.dat $FTP/bootstrap.dat 2>&1 | progressfilt; break;;
         [Nn]* ) echo You must like waiting a long time for shit to sync; break;;
         * ) echo "Please answer yes or no.";;
     esac
