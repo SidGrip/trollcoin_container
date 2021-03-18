@@ -76,7 +76,6 @@ gen=0
 listen=1
 daemon=1
 server=1
-txindex=1
 $PEERS
 EOF
 }
