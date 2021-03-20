@@ -1,10 +1,20 @@
 #!/bin/bash
-USER=$(whoami)
-CONFIG_FILE='trollcoin.conf'
-USERDIR=$(eval echo ~$user)
-CONFIGFOLDER='.trollcoin'
 FTP='ftp://45.77.246.197/Trollcoin'
+USER=$(whoami)
+USERDIR=$(eval echo ~$user)
+STRAP='bootstrap.dat'
+COIN_PATH='/usr/local/bin'
+TROLL_CONFIG_FILE='trollcoin.conf'
+TROLL_CONFIGFOLDER='.trollcoin'
+TROLL_COIN_DAEMON='trollcoind'
+TROLL_COIN_NAME='TrollCoin'
+TROLL_RPC_PORT='17000'
+TROLL_COIN_PORT='15000'
+BBlue='\033[1;34m'
 RED='\033[0;31m'
+GREEN='\033[0;32m'
+WHITE='\033[1;97m'
+YELLOW='\033[0;93m'
 NC='\033[0m'
 
 exec 3>&1 4>&2
@@ -12,17 +22,24 @@ trap 'exec 2>&4 1>&3' 0 1 2 3
 exec &> >(tee setup.log) 2>&1
 # Everything below will go to the file 'setup.log':
 
-echo -e "Installing ${RED}Trollcoin${NC} Docker Container"
-docker run -t -d -e DISPLAY=:0 --net=host -v=/$USERDIR/.trollcoin:/home/troll/.trollcoin --name=trollcoin sidgrip/trollcoin:latest
+function troll_install() {
+echo -e "Installing ${YELLOW}$TROLL_COIN_NAME ${WHITE}Docker Container${NC}"
+docker run -t -d -e DISPLAY=:0 --net=host -v=/$USERDIR/$TROLL_CONFIGFOLDER:/home/troll/.trollcoin --name=trollcoin sidgrip/trollcoin:latest
 
 sudo su - <<EOF
-sudo chown -R $USER /$USERDIR/.trollcoin
-sudo chmod 770 /$USERDIR/.trollcoin
+sudo chown -R $USER /$USERDIR/$TROLL_CONFIGFOLDER
+sudo chmod 770 /$USERDIR/$TROLL_CONFIGFOLDER
 sudo ufw allow 15000/tcp comment "trollcoin" >/dev/null
 EOF
 
-clear
+#docker exec trollcoin /home/troll/scripts/copy.sh
+docker cp /etc/machine-id trollcoin:/etc/machine-id
 
+clear
+}
+
+function bootstrap() {
+#Downloading Bootstrap
 progressfilt ()
 {
     local flag=false c count cr=$'\r' nl=$'\n'
@@ -45,33 +62,51 @@ progressfilt ()
         fi
     done
 }
-
+clear
 while true; do
-    read -p "Download Trollcoin Bootstrap? (Y or N)" yn
+    read -p "Download $TROLL_COIN_NAME $STRAP? (Y or N)" yn
     case $yn in
-        [Yy]* ) wget --progress=bar:force -O $USERDIR/$CONFIGFOLDER/bootstrap.dat $FTP/bootstrap.dat 2>&1 | progressfilt; break;;
+        [Yy]* ) wget --progress=bar:force -O $USERDIR/$TROLL_CONFIGFOLDER/$STRAP $FTP/$STRAP 2>&1 | progressfilt; break;;
         [Nn]* ) echo You must like waiting a long time for shit to sync; break;;
         * ) echo "Please answer yes or no.";;
     esac
 done
+clear
+}
 
-echo -e "Downloading ${RED}Trollcoin${NC} Peer Address"
-wget --progress=bar:force -P $USERDIR/$CONFIGFOLDER $FTP/peers.txt 2>&1 | progressfilt
-sleep 2
-PEERS=$(<$USERDIR/$CONFIGFOLDER/peers.txt)
-sleep 1
+function config_file() {
+IP4=$(curl ipv4.icanhazip.com)
+IP6=$(curl ipv6.icanhazip.com)
 
-echo "Creating config file"
+if [[ -n $IP4 ]] && [[ -n $IP6 ]]; then 
+clear
+echo "Both IPv4 - $IP4 & Ipv6 - $IP6 Address's detected"
+PEERS=$(curl -s$ $FTP/{seed_ipv6.txt,seed_ipv4.txt})
+
+elif [[ $IP4 =~ ^[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}$ ]]; then
+clear
+echo "$IP IPv4 Address Detected"
+PEERS=$(curl -s$ $FTPE/seed_ipv4.txt)
+
+elif [[ $IP6 =~ "${1#*:[0-9a-fA-F]}" ]]; then
+clear
+echo "$IP IPv6 Address Detected"
+PEERS=$(curl -s$ $FTP/seed_ipv6.txt)
+
+else
+echo No IP Found
+fi
+clear
+echo -e "Creating ${YELLOW}$TROLL_COIN_NAME${NC} Config"
 {
   RPCUSER=$(tr -cd '[:alnum:]' < /dev/urandom | fold -w10 | head -n1)
   RPCPASSWORD=$(tr -cd '[:alnum:]' < /dev/urandom | fold -w22 | head -n1)
-  cat << EOF > $USERDIR/$CONFIGFOLDER/$CONFIG_FILE
-maxconnections=35
+  cat << EOF > $USERDIR/$TROLL_CONFIGFOLDER/$TROLL_CONFIG_FILE
+maxconnections=25
 rpcuser=$RPCUSER
 rpcpassword=$RPCPASSWORD
-rpcallowip=127.0.0.1
-rpcport=17000
-port=15000
+rpcport=$TROLL_RPC_PORT
+port=$TROLL_COIN_PORT
 gen=0
 listen=1
 daemon=1
@@ -79,47 +114,90 @@ server=1
 $PEERS
 EOF
 }
-sleep 1
-rm $USERDIR/$CONFIGFOLDER/peers.txt
-docker exec trollcoin /home/troll/scripts/copy.sh
-docker cp /etc/machine-id trollcoin:/etc/machine-id
-
+sleep 2
 clear
+}
 
-echo -e "Creating ${RED}Trollcoin${NC} Shortcut"
+function qt_script() {
+#create scripts to control Trollcoin Qt wallet and Daemon in Docker container
+cat << 'EOT' > $USERDIR/$TROLL_CONFIGFOLDER/$TROLL_COIN_NAME
+#!/bin/bash
+CONTAINER_NAME='trollcoin'
+CID=$(docker ps -q -f status=running -f name=^/${CONTAINER_NAME}$)
+if [ ! "${CID}" ]; then
+  docker start trollcoin >/dev/null 2>&1
+  docker exec -it trollcoin /home/troll/trollcoin/TrollCoin
+else
+  docker exec -it trollcoin /home/troll/trollcoin/TrollCoin "$@"
+fi
+EOT
+sudo chmod u+x $USERDIR/$TROLL_CONFIGFOLDER/$TROLL_COIN_NAME
+}
+
+function daemon_script() {
+cat << 'EOT' > $USERDIR/$TROLL_CONFIGFOLDER/$TROLL_COIN_DAEMON
+#!/bin/bash
+CONTAINER_NAME='trollcoin'
+CID=$(docker ps -q -f status=running -f name=^/${CONTAINER_NAME}$)
+if [ ! "${CID}" ]; then
+  docker start trollcoin >/dev/null 2>&1
+  docker exec -it trollcoin /home/troll/trollcoin/trollcoind
+else
+  docker exec -it trollcoin /home/troll/trollcoin/trollcoind "$@"
+fi
+EOT
+sudo chmod u+x $USERDIR/$TROLL_CONFIGFOLDER/$TROLL_COIN_DAEMON
+}
+
+function troll_cut() {
 #Create .desktop app to launch trollcoin
+echo -e "Creating ${YELLOW}$TROLL_COIN_NAME${NC} Desktop Applicatoin Shortcut"
+wget -O $USERDIR/$TROLL_CONFIGFOLDER/trollcoin.png $FTP/$TROLL_CONFIGFOLDER/trollcoin.png >/dev/null 2>&1
+clear
 cat << EOF > $USERDIR/.local/share/applications/TrollCoin.desktop
 [Desktop Entry]
-Name=Trollcoin
+Name=TrollCoin
 Version=v2.0
-Icon=$USERDIR/$CONFIGFOLDER/trollcoin.png
-Exec=$USERDIR/$CONFIGFOLDER/TrollCoin
+Icon=$USERDIR/$TROLL_CONFIGFOLDER/trollcoin.png
+Exec=$USERDIR/$TROLL_CONFIGFOLDER/TrollCoin
 Terminal=true
 Type=Application
 Categories=Applicatoin;
-Keywords=Crypto;Trollcoin;Diet;Coke;
+Keywords=Crypto;TrollCoin;Diet;Coke;
 EOF
 
 sudo chmod +x $USERDIR/.local/share/applications/TrollCoin.desktop
 sudo update-desktop-database
 
-
 clear
+}
 
-#Checking for Bootstrap
-if [ -f "$USERDIR/$CONFIGFOLDER/bootstrap.dat" ]; then
-  # Control will enter here if file doesn't exist.
-echo -e "When you start the wallet for the frist time it will sync from the bootstrap." 
+function important_information() {
+if [ ! -f "$USERDIR/$TROLL_CONFIGFOLDER/$STRAP" ]; then
+clear
+else
+echo -e "${WHITE}When you start the wallet for the frist time it will sync from the bootstrap." 
 sleep 2
 echo -e "This could take hours, days or weeks depending on the speed of your machine"
 sleep 2
-echo -e "When it's done the wallet will rename the bootstrap.dat file to bootstrap.dat.old"
+echo -e "When it's done the wallet will rename the ${WHITE}bootstrap.datto bootstrap.dat.old"
 sleep 2
-echo -e "Then you can delete the bootstrap.dat.old file"
-
-else
-clear
-
+echo -e "Then you can delete the bootstrap.dat.old file${NC}"
+sleep 2
 fi
+echo -e "${WHITE}Everything is Done $USER, ${YELLOW}$TROLL_COIN_NAME${WHITE} should now work with any newer version of Ubuntu${NC}"
+}
 
-echo -e "Everything is Done $USER, ${RED}Trollcoin${NC} should now work with any newer vertion of Ubuntu"}
+function setup_node() {
+  troll_install
+  bootstrap
+  config_file
+  qt_script
+  daemon_script
+  troll_cut
+  important_information
+}
+
+##### Main #####
+clear
+setup_node
