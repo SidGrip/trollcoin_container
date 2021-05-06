@@ -176,7 +176,7 @@ echo -e "${WHITE}When you start the wallet for the frist time it will sync from 
 sleep 2
 echo -e "This could take hours, days or weeks depending on the speed of your machine"
 sleep 2
-echo -e "When it's done the wallet will rename the ${WHITE}bootstrap.datto bootstrap.dat.old"
+echo -e "When it's done the wallet will rename the ${WHITE}bootstrap.dat to bootstrap.dat.old"
 sleep 2
 echo -e "Then you can delete the bootstrap.dat.old file${NC}"
 sleep 2
