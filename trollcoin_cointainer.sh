@@ -81,17 +81,17 @@ IP6=$(curl ipv6.icanhazip.com)
 if [[ -n $IP4 ]] && [[ -n $IP6 ]]; then 
 clear
 echo "Both IPv4 - $IP4 & Ipv6 - $IP6 Address's detected"
-PEERS=$(curl -s$ $FTP/{seed_ipv6.txt,seed_ipv4.txt})
+PEERS=$(curl -s$ $FTP/$TROLL_CONFIGFOLDER/{seed_ipv6.txt,seed_ipv4.txt})
 
 elif [[ $IP4 =~ ^[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}$ ]]; then
 clear
 echo "$IP IPv4 Address Detected"
-PEERS=$(curl -s$ $FTPE/seed_ipv4.txt)
+PEERS=$(curl -s$ $FTP/$TROLL_CONFIGFOLDER/seed_ipv4.txt)
 
 elif [[ $IP6 =~ "${1#*:[0-9a-fA-F]}" ]]; then
 clear
 echo "$IP IPv6 Address Detected"
-PEERS=$(curl -s$ $FTP/seed_ipv6.txt)
+PEERS=$(curl -s$ $FTP/$TROLL_CONFIGFOLDER/seed_ipv6.txt)
 
 else
 echo No IP Found
