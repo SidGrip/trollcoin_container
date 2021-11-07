@@ -25,7 +25,7 @@ exec &> >(tee setup.log) 2>&1
 
 function troll_install() {
 echo -e "Installing ${YELLOW}$TROLL_COIN_NAME ${WHITE}Docker Container${NC}"
-docker run -t -d -e DISPLAY=:0 --net=host -v /etc/localtime:/etc/localtime:ro -v=/$USERDIR/$TROLL_CONFIGFOLDER:/home/troll/.trollcoin --name=trollcoin sidgrip/trollcoin:latest
+docker run -t -d -e DISPLAY=:0 --net=host -v=/etc/localtime:/etc/localtime:ro -v=/$USERDIR/$TROLL_CONFIGFOLDER:/home/troll/.trollcoin --name=trollcoin sidgrip/trollcoin:latest
 
 sudo su - <<EOF
 sudo chown -R $USER /$USERDIR/$TROLL_CONFIGFOLDER
