@@ -1,5 +1,6 @@
 #!/bin/bash
 FTP='ftp://78.141.243.202/Trollcoin'
+GITHUB='https://github.com/SidGrip/trollcoin_container/releases/download/2.1.0.0'
 USER=$(whoami)
 USERDIR=$(eval echo ~$user)
 STRAP='bootstrap.dat'
@@ -24,7 +25,7 @@ exec &> >(tee setup.log) 2>&1
 
 function troll_install() {
 echo -e "Installing ${YELLOW}$TROLL_COIN_NAME ${WHITE}Docker Container${NC}"
-docker run -t -d -e DISPLAY=:0 --net=host -v=/$USERDIR/$TROLL_CONFIGFOLDER:/home/troll/.trollcoin --name=trollcoin sidgrip/trollcoin:latest
+docker run -t -d -e DISPLAY=:0 --net=host -v /etc/localtime:/etc/localtime:ro -v=/$USERDIR/$TROLL_CONFIGFOLDER:/home/troll/.trollcoin --name=trollcoin sidgrip/trollcoin:latest
 
 sudo su - <<EOF
 sudo chown -R $USER /$USERDIR/$TROLL_CONFIGFOLDER
@@ -32,7 +33,6 @@ sudo chmod 770 /$USERDIR/$TROLL_CONFIGFOLDER
 sudo ufw allow 15000/tcp comment "trollcoin" >/dev/null
 EOF
 
-#docker exec trollcoin /home/troll/scripts/copy.sh
 docker cp /etc/machine-id trollcoin:/etc/machine-id
 
 clear
@@ -148,7 +148,7 @@ sudo chmod u+x $USERDIR/$TROLL_CONFIGFOLDER/$TROLL_COIN_DAEMON
 function troll_cut() {
 #Create .desktop app to launch trollcoin
 echo -e "Creating ${YELLOW}$TROLL_COIN_NAME${NC} Desktop Applicatoin Shortcut"
-wget -O $USERDIR/$TROLL_CONFIGFOLDER/trollcoin.png $FTP/$TROLL_CONFIGFOLDER/trollcoin.png >/dev/null 2>&1
+wget -O $USERDIR/$TROLL_CONFIGFOLDER/trollcoin.png $GITHUB/trollcoin.png >/dev/null 2>&1
 clear
 cat << EOF > $USERDIR/.local/share/applications/TrollCoin.desktop
 [Desktop Entry]
