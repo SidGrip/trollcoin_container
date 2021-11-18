@@ -60,7 +60,7 @@ The script will create a .trollcoin data directory with TrollCoin & trollcoind -
 <br>
 <br>
 <h2 align="center">If this Makes Your Nipples So HARD, that you could cut glass!</h2>
-<h3 align="center">Use that intense feeling and send an Impulse Donation</h3>
+<h3 align="center">Use that intense feeling and send a Donation</h3>
 <h2 align="center">TwFN6UiRWUhYAjZZC6q8ThCqFffg9feR5N</h2>
 <p align="center">
   <img width="450" src="https://media1.tenor.com/images/7a13ea9d38f091d68125ad13763d5721/tenor.gif?itemid=16217383" alt="TrollRoll">
