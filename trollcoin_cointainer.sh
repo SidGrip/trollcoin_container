@@ -108,9 +108,9 @@ CONTAINER_NAME='trollcoin'
 CID=$(docker ps -q -f status=running -f name=^/${CONTAINER_NAME}$)
 if [ ! "${CID}" ]; then
   docker start trollcoin >/dev/null 2>&1
-  docker exec trollcoin $USERDIR/TrollCoin-2.0/TrollCoin
+  docker exec trollcoin /home/troll/trollcoin/TrollCoin
 else
-  docker exec trollcoin $USERDIR/TrollCoin-2.0/TrollCoin "$@"
+  docker exec trollcoin /home/troll/trollcoin/TrollCoin "$@"
 fi
 EOT
 sudo chmod u+x $USERDIR/$DIR/$NAME
@@ -123,9 +123,9 @@ CONTAINER_NAME='trollcoin'
 CID=$(docker ps -q -f status=running -f name=^/${CONTAINER_NAME}$)
 if [ ! "${CID}" ]; then
   docker start trollcoin >/dev/null 2>&1
-  docker exec trollcoin $USERDIR/TrollCoin-2.0/src/trollcoind
+  docker exec trollcoin /home/troll/trollcoin/trollcoind
 else
-  docker exec trollcoin $USERDIR/TrollCoin-2.0/src/trollcoind "$@"
+  docker exec trollcoin /home/troll/trollcoin/trollcoind "$@"
 fi
 EOT
 sudo chmod u+x $USERDIR/$DIR/$DAEMON
