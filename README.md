@@ -38,7 +38,7 @@ Then run ``` bash trollcoin_Dockerfile.sh && docker build --tag trollcoin:local 
 <br> 
 This will gernerate a Dockerfile, build the container and compile both the Daemon and QT wallet. It will take a little time to complete.
 <br>
-You will see red warning/error messages.
+You will see red warning/error messages. [It's all part of the experience](https://youtu.be/XxHS9lTUN4Y?t=40)
 <br>
 #### After the container build is done
 Copy & paste into terminal window - Everyting is run as user enter sudo password when prompted
