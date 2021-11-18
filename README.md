@@ -1,5 +1,6 @@
 ## **TrollCoin Qt & Daemon running in a Ubuntu 14 Docker Container**
-<br>
+
+![TROLL logo](https://avatars2.githubusercontent.com/u/16044831?v=3&u=c30f9a963a650436d286920035513bc94828d560&s=140)
 
 https://hub.docker.com/r/sidgrip/trollcoin    |    https://github.com/TrollCoin2/TrollCoin-2.0/blob/master/README.md
 <br>
