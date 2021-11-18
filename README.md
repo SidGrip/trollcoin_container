@@ -1,9 +1,7 @@
 ## **TrollCoin Qt & Daemon running in a Ubuntu 14 Docker Container**
 <br>
 
-![TROLL logo](https://avatars2.githubusercontent.com/u/16044831?v=3&u=c30f9a963a650436d286920035513bc94828d560&s=140)
-
-https://github.com/TrollCoin2/TrollCoin-2.0/blob/master/README.md
+https://hub.docker.com/r/sidgrip/trollcoin    |    https://github.com/TrollCoin2/TrollCoin-2.0/blob/master/README.md
 <br>
 #### To setup Non-Root Docker on Ubuntu 20.04
 
@@ -30,11 +28,36 @@ wget -q https://raw.githubusercontent.com/SidGrip/trollcoin_container/main/troll
 Then run ``` bash trollcoin_cointainer.sh``` 
 <br>
 <br>
-#### I tried to make this as seamless as possable
-###### The script will create a .trollcoin data directory with TrollCoin & trollcoind - both files are scripts that run same as the Qt wallet or daemon would.
-###### -- will give you an option to download a bootstrap that is a week behind
-###### -- will autogen a config with random user/pass and add currents nodes
-###### -- will place a shortcut in your desktop applicatoins for launching the Qt wallet
+
+#### ⚡ If you would like to compile it yourself
+Copy & paste into terminal window
+```
+wget -q https://raw.githubusercontent.com/SidGrip/trollcoin_container/main/trollcoin_Dockerfile.sh
+```
+Then run ``` bash trollcoin_Dockerfile.sh && docker build --tag trollcoin:local .```
+<br> 
+This will gernerate a Dockerfile, build the container and compile both the Daemon and QT wallet. It will take a little time to complete.
+<br>
+You will see red warning/error messages.
+<br>
+#### After the container build is done
+Copy & paste into terminal window - Everyting is run as user enter sudo password when prompted
+```
+wget -q https://raw.githubusercontent.com/SidGrip/trollcoin_container/main/local_troll_setup.sh
+```
+Then run ``` bash local_troll_setup.sh```
+<br>
+<br>
+I tried to make this as seamless as possable
+<br>
+The script will create a .trollcoin data directory with TrollCoin & trollcoind - both files are scripts that run same as the Qt wallet or daemon would.
+<br>
+-- will give you an option to download a bootstrap that is a week behind
+<br>
+-- will autogen a config with random user/pass and add currents nodes
+<br>
+-- will place a shortcut in your desktop applicatoins for launching the Qt wallet
+<br>
 <br>
 <h2 align="center">If this Makes Your Nipples So HARD, that you could cut glass!</h2>
 <h3 align="center">Use that intense feeling and send an Impulse Donation</h3>
