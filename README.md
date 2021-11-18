@@ -21,7 +21,7 @@ wget -q https://raw.githubusercontent.com/SidGrip/trollcoin_container/main/non_r
 ```
 Then run ```bash non_root_docker.sh``` 
 <br>
-#### After the system reboots
+#### Compiled Container, Daemon & QT wallet
 Copy & paste into terminal window - Everyting is run as user enter sudo password when prompted
 ```
 wget -q https://raw.githubusercontent.com/SidGrip/trollcoin_container/main/trollcoin_cointainer.sh
@@ -30,7 +30,7 @@ Then run ``` bash trollcoin_cointainer.sh```
 <br>
 <br>
 
-#### ⚡ If you would like to compile it yourself
+#### ⚡ Compile it yourself
 Copy & paste into terminal window
 ```
 wget -q https://raw.githubusercontent.com/SidGrip/trollcoin_container/main/trollcoin_Dockerfile.sh
