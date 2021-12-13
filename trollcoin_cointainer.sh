@@ -1,5 +1,5 @@
 #!/bin/bash
-FTP='ftp://78.141.243.202/Trollcoin'
+FTP='https://bootstrap.specminer.com/Trollcoin'
 GITHUB='https://github.com/TrollCoin2/TrollCoin-2.0.git'
 USER=$(whoami)
 USERDIR=$(eval echo ~$USER)
