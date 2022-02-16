@@ -51,7 +51,7 @@ done
 function troll_config() {
 PEERS=$(</tmp/nodes.txt)
 clear
-echo -e "Creating ${YELLOW}$TROLL_COIN_NAME${NC} Config"
+echo -e "Creating ${YELLOW}$NAME${NC} Config"
   RPCUSER=$(tr -cd '[:alnum:]' < /dev/urandom | fold -w10 | head -n1)
   RPCPASSWORD=$(tr -cd '[:alnum:]' < /dev/urandom | fold -w22 | head -n1)
   cat << EOF > $USERDIR/$DIR/$CONF
@@ -133,7 +133,7 @@ sudo chmod u+x $USERDIR/$DIR/$DAEMON
 
 function troll_cut() {
 #Create .desktop app to launch trollcoin
-echo -e "Creating ${YELLOW}$$NAME${NC} Desktop Applicatoin Shortcut"
+echo -e "Creating ${YELLOW}$NAME${NC} Desktop Applicatoin Shortcut"
 wget -O $USERDIR/$DIR/trollcoin.png $FTP/trollcoin.png >/dev/null 2>&1
 clear
 cat << EOF > $USERDIR/.local/share/applications/TrollCoin.desktop
