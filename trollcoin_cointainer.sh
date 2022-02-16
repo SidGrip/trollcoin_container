@@ -18,7 +18,7 @@ YELLOW='\033[0;93m'
 NC='\033[0m'
 
 function troll_install() {
-echo -e "Installing ${YELLOW}$TROLL_COIN_NAME ${WHITE}Docker Container${NC}"
+echo -e "Installing ${YELLOW}$NAME ${WHITE}Docker Container${NC}"
 docker run -t -d -e DISPLAY=:0 --net=host -v=/etc/localtime:/etc/localtime:ro -v=/$USERDIR/$DIR:/home/troll/.trollcoin --name=trollcoin sidgrip/trollcoin:latest
 
 sudo su - <<EOF
