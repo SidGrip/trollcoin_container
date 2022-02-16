@@ -167,7 +167,7 @@ sleep 2
 echo -e "Then you can delete the bootstrap.dat.old file${NC}"
 sleep 2
 fi
-echo -e "${WHITE}Everything is Done $USER, ${YELLOW}$TROLL_COIN_NAME${WHITE} should now work with any newer version of Ubuntu${NC}"
+echo -e "${WHITE}Everything is Done $USER, ${YELLOW}$NAME${WHITE} should now work with any newer version of Ubuntu${NC}"
 }
 
 function setup_node() {
